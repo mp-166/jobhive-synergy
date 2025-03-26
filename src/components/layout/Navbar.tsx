@@ -1,13 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '@/components/common/Button';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X, User, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, profile, signOut } = useAuth();
+  const { toast } = useToast();
 
   const toggleMenu = () => setIsOpen(!isOpen);
   
@@ -28,6 +33,15 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: "Signed out",
+      description: "You have been successfully signed out",
+    });
+    navigate('/');
+  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -70,16 +84,44 @@ const Navbar = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              leftIcon={<User size={16} />}
-              className="text-sm"
-            >
-              Sign In
-            </Button>
-            <Button variant="primary" className="text-sm">
-              Register
-            </Button>
+            {user ? (
+              <>
+                <Button 
+                  variant="ghost" 
+                  leftIcon={<User size={16} />}
+                  className="text-sm"
+                  onClick={() => navigate('/profile')}
+                >
+                  {profile?.first_name || 'Profile'}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  leftIcon={<LogOut size={16} />}
+                  className="text-sm"
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  leftIcon={<User size={16} />}
+                  className="text-sm"
+                  onClick={() => navigate('/auth')}
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  variant="primary" 
+                  className="text-sm"
+                  onClick={() => navigate('/auth', { state: { tab: 'sign-up' } })}
+                >
+                  Register
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -114,16 +156,44 @@ const Navbar = () => {
             ))}
           </nav>
           <div className="pt-4 border-t flex flex-col space-y-3">
-            <Button 
-              variant="ghost" 
-              leftIcon={<User size={16} />}
-              className="justify-start text-sm"
-            >
-              Sign In
-            </Button>
-            <Button variant="primary" className="text-sm">
-              Register
-            </Button>
+            {user ? (
+              <>
+                <Button 
+                  variant="ghost" 
+                  leftIcon={<User size={16} />}
+                  className="justify-start text-sm"
+                  onClick={() => navigate('/profile')}
+                >
+                  {profile?.first_name || 'Profile'}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  leftIcon={<LogOut size={16} />}
+                  className="justify-start text-sm"
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  leftIcon={<User size={16} />}
+                  className="justify-start text-sm"
+                  onClick={() => navigate('/auth')}
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  variant="primary" 
+                  className="text-sm"
+                  onClick={() => navigate('/auth', { state: { tab: 'sign-up' } })}
+                >
+                  Register
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
