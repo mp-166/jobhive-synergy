@@ -1,8 +1,9 @@
 
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Briefcase } from 'lucide-react';
 
 const HowItWorks = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -41,6 +42,8 @@ const HowItWorks = () => {
       description: 'Employers post job opportunities, while job seekers search or receive auto-matched positions.',
       role: 'Both',
       detailedInfo: 'Use our advanced AI-powered search to find perfect job matches or create compelling job listings.',
+      actionLink: '/post-job',
+      actionText: 'Post a Job',
     },
     {
       number: '03',
@@ -109,12 +112,22 @@ const HowItWorks = () => {
                 <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
                 <p className="text-muted-foreground">{step.description}</p>
                 
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="mt-4 group">
-                    Learn More 
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </DialogTrigger>
+                <div className="mt-4 flex space-x-2">
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm" className="group">
+                      Learn More 
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </DialogTrigger>
+                  
+                  {step.actionLink && (
+                    <Link to={step.actionLink}>
+                      <Button size="sm">
+                        {step.actionText}
+                      </Button>
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -140,10 +153,31 @@ const HowItWorks = () => {
                     </ul>
                   </div>
                 )}
+                
+                {step.actionLink && (
+                  <div className="mt-2 pt-2 border-t">
+                    <Link to={step.actionLink}>
+                      <Button className="w-full">
+                        {step.actionText}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </DialogContent>
           </Dialog>
         ))}
+      </div>
+      
+      <div className="mt-16 text-center animate-in-view">
+        <Link to="/post-job">
+          <Button size="lg" className="group">
+            <Briefcase className="mr-2 h-5 w-5" />
+            Post a Job Now
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </Button>
+        </Link>
       </div>
     </section>
   );

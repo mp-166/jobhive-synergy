@@ -85,7 +85,7 @@ const Navbar = () => {
                 AI Search
               </span>
             </Link>
-            {user && (
+            {user ? (
               <>
                 <Link to="/profile" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
                   Profile
@@ -94,8 +94,7 @@ const Navbar = () => {
                   Sign Out
                 </Button>
               </>
-            )}
-            {!user && (
+            ) : (
               <>
                 <Link to="/post-job" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
                   Post a Job

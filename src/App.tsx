@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import AIJobSearch from "./pages/AIJobSearch";
 import HowItWorks from "./pages/HowItWorks";
+import PostJob from "./pages/PostJob";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/ai-job-search" element={<AIJobSearch />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/post-job" element={<PostJob />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
