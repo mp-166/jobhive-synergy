@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, Menu, X, Search as SearchIcon } from 'lucide-react';
+import { Menu, X, Search as SearchIcon } from 'lucide-react';
 import Button from '@/components/common/Button';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -16,51 +17,51 @@ const Navbar = () => {
     <nav className="fixed w-full z-10 bg-background/80 backdrop-blur-sm border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo and main nav links */}
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Link to="/" className="flex items-center space-x-2">
-                <Briefcase className="h-6 w-6 text-primary" />
-                <span className="font-bold text-xl">JobHive</span>
-              </Link>
-            </div>
-            <div className="hidden md:block ml-10 flex space-x-4">
-              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
-                Home
-              </Link>
-              <Link to="/jobs" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
-                Find Jobs
-              </Link>
-              <Link to="/ai-job-search" className="px-3 py-2 rounded-md text-sm font-medium text-primary hover:bg-primary/10">
-                <span className="flex items-center">
-                  <SearchIcon className="mr-1 h-4 w-4" />
-                  AI Search
-                </span>
-              </Link>
-            </div>
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="bg-primary text-white font-bold rounded-lg w-8 h-8 flex items-center justify-center">E</div>
+              <span className="font-bold text-xl">Empower</span>
+            </Link>
           </div>
-
-          {/* Rest of navbar */}
-          <div className="flex items-center space-x-4">
+          
+          {/* Main Nav Links - All in one line */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+              Home
+            </Link>
+            <Link to="/jobs" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+              Find Jobs
+            </Link>
+            <Link to="/how-it-works" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+              How It Works
+            </Link>
             {user ? (
               <>
-                <Link to="/profile" className="hidden md:block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+                <Link to="/profile" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
                   Profile
                 </Link>
-                <Button variant="outline" size="sm" onClick={signOut} className="hidden md:block">
+                <Button variant="outline" size="sm" onClick={signOut}>
                   Sign Out
                 </Button>
-                <div className="md:hidden">
-                  <Button variant="ghost" size="icon" onClick={toggleMenu}>
-                    {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                  </Button>
-                </div>
               </>
             ) : (
-              <Link to="/auth" className="hidden md:block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
-                Sign In
-              </Link>
+              <>
+                <Link to="/post-job" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+                  Post a Job
+                </Link>
+                <Link to="/auth" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+                  Sign In
+                </Link>
+              </>
             )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <Button variant="ghost" size="icon" onClick={toggleMenu}>
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
           </div>
         </div>
       </div>
@@ -74,6 +75,9 @@ const Navbar = () => {
             </Link>
             <Link to="/jobs" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
               Find Jobs
+            </Link>
+            <Link to="/how-it-works" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+              How It Works
             </Link>
             <Link to="/ai-job-search" className="block px-3 py-2 rounded-md text-sm font-medium text-primary hover:bg-primary/10">
               <span className="flex items-center">
@@ -92,9 +96,14 @@ const Navbar = () => {
               </>
             )}
             {!user && (
-              <Link to="/auth" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
-                Sign In
-              </Link>
+              <>
+                <Link to="/post-job" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+                  Post a Job
+                </Link>
+                <Link to="/auth" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+                  Sign In
+                </Link>
+              </>
             )}
           </div>
         </div>
