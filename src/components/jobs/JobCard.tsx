@@ -77,7 +77,11 @@ const JobCard = ({
               {logo ? (
                 <img src={logo} alt={company} className="h-full w-full object-cover" />
               ) : (
-                <span className="text-xl font-bold">{company.charAt(0)}</span>
+                <img 
+                  src="/lovable-uploads/00885a0e-6e53-452c-8173-4bd7c3ef1822.png" 
+                  alt="Empower Logo" 
+                  className="h-8 w-auto" 
+                />
               )}
             </div>
             <div className="ml-3 flex-1">

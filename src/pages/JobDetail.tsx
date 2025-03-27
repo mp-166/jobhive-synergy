@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -107,11 +106,15 @@ const JobDetail = () => {
             <div className="bg-white border rounded-xl p-6 md:p-8 shadow-sm">
               <div className="flex flex-col md:flex-row md:items-start gap-6">
                 {/* Company logo */}
-                <div className="h-16 w-16 bg-secondary flex items-center justify-center rounded-lg">
+                <div className="h-16 w-16 bg-secondary flex items-center justify-center rounded-lg overflow-hidden">
                   {job.logo ? (
-                    <img src={job.logo} alt={job.company} className="h-full w-full object-cover rounded-lg" />
+                    <img src={job.logo} alt={job.company} className="h-full w-full object-cover" />
                   ) : (
-                    <span className="text-2xl font-bold">{job.company.charAt(0)}</span>
+                    <img 
+                      src="/lovable-uploads/00885a0e-6e53-452c-8173-4bd7c3ef1822.png" 
+                      alt="Empower Logo" 
+                      className="h-12 w-auto"
+                    />
                   )}
                 </div>
                 

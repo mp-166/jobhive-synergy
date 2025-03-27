@@ -20,7 +20,11 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="bg-primary text-white font-bold rounded-lg w-8 h-8 flex items-center justify-center">E</div>
+              <img 
+                src="/lovable-uploads/00885a0e-6e53-452c-8173-4bd7c3ef1822.png" 
+                alt="Empower Logo" 
+                className="h-8 w-auto" 
+              />
               <span className="font-bold text-xl">Empower</span>
             </Link>
           </div>

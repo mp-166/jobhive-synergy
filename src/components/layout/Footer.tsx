@@ -70,7 +70,11 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
-              <div className="bg-primary text-white font-bold rounded-lg w-8 h-8 flex items-center justify-center">E</div>
+              <img 
+                src="/lovable-uploads/00885a0e-6e53-452c-8173-4bd7c3ef1822.png" 
+                alt="Empower Logo" 
+                className="h-8 w-auto" 
+              />
               <span className="ml-2 font-medium">Empower</span>
             </div>
             
