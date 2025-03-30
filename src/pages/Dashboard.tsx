@@ -298,7 +298,7 @@ const Dashboard = () => {
                   <div className="space-y-3">
                     {profile?.user_type === 'job_seeker' ? (
                       <>
-                        <Button variant="default" size="sm" className="w-full justify-start" onClick={() => navigate('/jobs')}>
+                        <Button variant="primary" size="sm" className="w-full justify-start" onClick={() => navigate('/jobs')}>
                           <Briefcase size={16} className="mr-2" />
                           Find New Jobs
                         </Button>
@@ -313,7 +313,7 @@ const Dashboard = () => {
                       </>
                     ) : (
                       <>
-                        <Button variant="default" size="sm" className="w-full justify-start" onClick={() => navigate('/post-job')}>
+                        <Button variant="primary" size="sm" className="w-full justify-start" onClick={() => navigate('/post-job')}>
                           <Briefcase size={16} className="mr-2" />
                           Post New Job
                         </Button>
@@ -524,7 +524,7 @@ const Dashboard = () => {
                                 <span>Full-time</span>
                               </div>
                             </div>
-                            <Button variant="default" size="sm" className="mt-3">
+                            <Button variant="primary" size="sm" className="mt-3">
                               Apply Now
                             </Button>
                           </div>
@@ -542,7 +542,7 @@ const Dashboard = () => {
                                 <span>Part-time</span>
                               </div>
                             </div>
-                            <Button variant="default" size="sm" className="mt-3">
+                            <Button variant="primary" size="sm" className="mt-3">
                               Apply Now
                             </Button>
                           </div>
@@ -569,7 +569,7 @@ const Dashboard = () => {
                                 <span>Available Immediately</span>
                               </div>
                             </div>
-                            <Button variant="default" size="sm" className="mt-3">
+                            <Button variant="primary" size="sm" className="mt-3">
                               View Profile
                             </Button>
                           </div>
@@ -594,7 +594,7 @@ const Dashboard = () => {
                                 <span>Available in 1 week</span>
                               </div>
                             </div>
-                            <Button variant="default" size="sm" className="mt-3">
+                            <Button variant="primary" size="sm" className="mt-3">
                               View Profile
                             </Button>
                           </div>
@@ -641,7 +641,7 @@ const Dashboard = () => {
                                       variant={
                                         application.status === 'Under Review' ? 'warning' : 
                                         application.status === 'Shortlisted' ? 'success' :
-                                        application.status === 'Rejected' ? 'destructive' : 'default'
+                                        application.status === 'Rejected' ? 'danger' : 'default'
                                       }
                                     >
                                       {application.status}
@@ -663,7 +663,7 @@ const Dashboard = () => {
                         ) : (
                           <div className="text-center py-10">
                             <p className="text-muted-foreground mb-4">You haven't applied to any jobs yet</p>
-                            <Button onClick={() => navigate('/jobs')}>
+                            <Button variant="primary" onClick={() => navigate('/jobs')}>
                               Browse Jobs
                             </Button>
                           </div>
@@ -732,7 +732,7 @@ const Dashboard = () => {
                         ) : (
                           <div className="text-center py-10">
                             <p className="text-muted-foreground mb-4">You haven't completed any jobs yet</p>
-                            <Button onClick={() => navigate('/jobs')}>
+                            <Button variant="primary" onClick={() => navigate('/jobs')}>
                               Find Jobs
                             </Button>
                           </div>
@@ -749,7 +749,7 @@ const Dashboard = () => {
                       <div className="p-6">
                         <div className="flex justify-between items-center mb-4">
                           <h3 className="text-lg font-semibold">Your Posted Jobs</h3>
-                          <Button size="sm" onClick={() => navigate('/post-job')}>
+                          <Button variant="primary" size="sm" onClick={() => navigate('/post-job')}>
                             Post New Job
                           </Button>
                         </div>
@@ -804,7 +804,7 @@ const Dashboard = () => {
                         ) : (
                           <div className="text-center py-10">
                             <p className="text-muted-foreground mb-4">You haven't posted any jobs yet</p>
-                            <Button onClick={() => navigate('/post-job')}>
+                            <Button variant="primary" onClick={() => navigate('/post-job')}>
                               Post a Job
                             </Button>
                           </div>
@@ -852,7 +852,7 @@ const Dashboard = () => {
                                   </div>
                                 </div>
                                 <div className="flex space-x-3 mt-3">
-                                  <Button variant="default" size="sm">
+                                  <Button variant="primary" size="sm">
                                     View Profile
                                   </Button>
                                   <Button variant="outline" size="sm">
@@ -893,7 +893,7 @@ const Dashboard = () => {
                                   </div>
                                 </div>
                                 <div className="flex space-x-3 mt-3">
-                                  <Button variant="default" size="sm">
+                                  <Button variant="primary" size="sm">
                                     View Profile
                                   </Button>
                                   <Button variant="outline" size="sm">
@@ -934,7 +934,7 @@ const Dashboard = () => {
                                   </div>
                                 </div>
                                 <div className="flex space-x-3 mt-3">
-                                  <Button variant="default" size="sm">
+                                  <Button variant="primary" size="sm">
                                     View Profile
                                   </Button>
                                   <Button variant="outline" size="sm">

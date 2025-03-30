@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -60,7 +61,8 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link to="/post-job">
-                  <Button leftIcon={<Briefcase size={16} />}>
+                  <Button className="flex items-center gap-2">
+                    <Briefcase size={16} />
                     Post a Job
                   </Button>
                 </Link>
