@@ -4,13 +4,13 @@ import JobCard, { JobCardProps } from './JobCard';
 import Button from '@/components/common/Button';
 import { Search, MapPin, Filter, X } from 'lucide-react';
 
-// Sample data for jobs
+// Sample data for jobs in Hyderabad
 const sampleJobs: JobCardProps[] = [
   {
     id: '1',
     title: 'Construction Helper',
     company: 'BuildRight Construction',
-    location: 'Hyderabad',
+    location: 'Gachibowli, Hyderabad',
     salary: '₹10,000 - ₹15,000',
     duration: '2 weeks',
     type: 'Full-time',
@@ -20,7 +20,7 @@ const sampleJobs: JobCardProps[] = [
     id: '2',
     title: 'Delivery Driver',
     company: 'SpeedMart',
-    location: 'Bangalore',
+    location: 'Madhapur, Hyderabad',
     salary: '₹500 per day',
     duration: 'Ongoing',
     type: 'Part-time',
@@ -30,7 +30,7 @@ const sampleJobs: JobCardProps[] = [
     id: '3',
     title: 'Data Entry Specialist',
     company: 'TechSolutions',
-    location: 'Remote',
+    location: 'Hitech City, Hyderabad',
     salary: '₹20,000 - ₹25,000',
     duration: '1 month',
     type: 'Contract',
@@ -40,7 +40,7 @@ const sampleJobs: JobCardProps[] = [
     id: '4',
     title: 'Event Staff',
     company: 'EventPro',
-    location: 'Mumbai',
+    location: 'Banjara Hills, Hyderabad',
     salary: '₹1,200 per day',
     duration: '3 days',
     type: 'Temporary',
@@ -50,7 +50,7 @@ const sampleJobs: JobCardProps[] = [
     id: '5',
     title: 'Warehouse Associate',
     company: 'LogiTech Warehousing',
-    location: 'Delhi',
+    location: 'Secunderabad, Hyderabad',
     salary: '₹12,000 - ₹18,000',
     duration: 'Ongoing',
     type: 'Full-time',
@@ -60,12 +60,31 @@ const sampleJobs: JobCardProps[] = [
     id: '6',
     title: 'Customer Service Representative',
     company: 'ServiceFirst',
-    location: 'Chennai',
+    location: 'Ameerpet, Hyderabad',
     salary: '₹15,000 - ₹20,000',
     duration: '6 months',
     type: 'Contract',
     postedAt: '2023-08-10T13:25:00',
   },
+];
+
+// Hyderabad areas for filter options
+const hyderabadAreas = [
+  'All Hyderabad',
+  'Gachibowli',
+  'Madhapur',
+  'Hitech City',
+  'Banjara Hills',
+  'Jubilee Hills',
+  'Secunderabad',
+  'Ameerpet',
+  'Kukatpally',
+  'Begumpet',
+  'Hitec City',
+  'LB Nagar',
+  'Uppal',
+  'Miyapur',
+  'Kondapur',
 ];
 
 const JobList = () => {
@@ -78,14 +97,19 @@ const JobList = () => {
     temporary: false,
   });
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedArea, setSelectedArea] = useState('All Hyderabad');
   
   // Filter jobs based on search query, location, and job type
   const filteredJobs = sampleJobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                          job.company.toLowerCase().includes(searchQuery.toLowerCase());
     
-    const matchesLocation = locationQuery === '' || 
-                           job.location.toLowerCase().includes(locationQuery.toLowerCase());
+    let matchesLocation = true;
+    if (selectedArea !== 'All Hyderabad') {
+      matchesLocation = job.location.includes(selectedArea);
+    } else if (locationQuery) {
+      matchesLocation = job.location.toLowerCase().includes(locationQuery.toLowerCase());
+    }
     
     let matchesType = true;
     if (filters.fullTime && job.type.toLowerCase() !== 'full-time') matchesType = false;
@@ -110,12 +134,20 @@ const JobList = () => {
   const clearAllFilters = () => {
     setSearchQuery('');
     setLocationQuery('');
+    setSelectedArea('All Hyderabad');
     setFilters({
       fullTime: false,
       partTime: false,
       contract: false,
       temporary: false,
     });
+  };
+
+  const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedArea(e.target.value);
+    if (e.target.value !== 'All Hyderabad') {
+      setLocationQuery('');
+    }
   };
 
   return (
@@ -139,21 +171,41 @@ const JobList = () => {
             </div>
           </div>
           
-          {/* Location search */}
+          {/* Location selection */}
           <div>
-            <label htmlFor="location" className="sr-only">Location</label>
+            <label htmlFor="area" className="sr-only">Area in Hyderabad</label>
             <div className="relative">
-              <input
-                id="location"
-                type="text"
-                value={locationQuery}
-                onChange={(e) => setLocationQuery(e.target.value)}
-                placeholder="Location"
-                className="w-full h-12 pl-10 pr-4 rounded-lg border border-input bg-white focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
+              <select
+                id="area"
+                value={selectedArea}
+                onChange={handleAreaChange}
+                className="w-full h-12 pl-10 pr-4 rounded-lg border border-input bg-white focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none"
+              >
+                {hyderabadAreas.map(area => (
+                  <option key={area} value={area}>{area}</option>
+                ))}
+              </select>
               <MapPin className="absolute left-3 top-3.5 text-muted-foreground" size={20} />
             </div>
           </div>
+          
+          {/* Custom location search - only visible when All Hyderabad is selected */}
+          {selectedArea === 'All Hyderabad' && (
+            <div className="md:hidden">
+              <label htmlFor="location" className="sr-only">Custom location</label>
+              <div className="relative">
+                <input
+                  id="location"
+                  type="text"
+                  value={locationQuery}
+                  onChange={(e) => setLocationQuery(e.target.value)}
+                  placeholder="Specific area in Hyderabad"
+                  className="w-full h-12 pl-10 pr-4 rounded-lg border border-input bg-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                />
+                <MapPin className="absolute left-3 top-3.5 text-muted-foreground" size={20} />
+              </div>
+            </div>
+          )}
           
           {/* Filter button */}
           <div className="flex space-x-2">
@@ -166,7 +218,7 @@ const JobList = () => {
               Filter
             </Button>
             
-            {(searchQuery || locationQuery || Object.values(filters).some(v => v)) && (
+            {(searchQuery || locationQuery || selectedArea !== 'All Hyderabad' || Object.values(filters).some(v => v)) && (
               <Button
                 leftIcon={<X size={18} />}
                 variant="ghost"
@@ -230,6 +282,24 @@ const JobList = () => {
                 Temporary
               </label>
             </div>
+            
+            {/* Custom location search when All Hyderabad is selected - for larger screens */}
+            {selectedArea === 'All Hyderabad' && (
+              <div className="hidden md:block col-span-4 mt-3">
+                <label htmlFor="location-lg" className="block text-sm mb-1">Specific area in Hyderabad</label>
+                <div className="relative">
+                  <input
+                    id="location-lg"
+                    type="text"
+                    value={locationQuery}
+                    onChange={(e) => setLocationQuery(e.target.value)}
+                    placeholder="Enter a specific location"
+                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-input bg-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                  <MapPin className="absolute left-3 top-2.5 text-muted-foreground" size={18} />
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

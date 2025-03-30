@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Badge from '@/components/common/Badge';
 import Card from '@/components/common/Card';
-import { MapPin, Clock, DollarSign } from 'lucide-react';
+import { MapPin, Clock, IndianRupee } from 'lucide-react';
 
 export interface JobCardProps {
   id: string;
@@ -104,7 +104,7 @@ const JobCard = ({
           
           <div className="flex flex-wrap items-center gap-4 mt-auto pt-4 border-t text-sm text-muted-foreground">
             <div className="flex items-center">
-              <DollarSign size={14} className="mr-1" />
+              <IndianRupee size={14} className="mr-1" />
               <span>{salary}</span>
             </div>
             <div className="flex items-center">
