@@ -114,7 +114,8 @@ const AIJobSearch = () => {
                     className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground/70 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
-                {searchHistory.length > 0 && (
+                
+                {searchHistory.length > 0 ? (
                   <CommandList>
                     <CommandGroup heading="Recent Searches">
                       {searchHistory.map((query, index) => (
@@ -129,8 +130,9 @@ const AIJobSearch = () => {
                       ))}
                     </CommandGroup>
                   </CommandList>
+                ) : (
+                  <CommandEmpty>No recent searches</CommandEmpty>
                 )}
-                <CommandEmpty>No recent searches</CommandEmpty>
               </Command>
               
               <Button 
