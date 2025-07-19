@@ -30,7 +30,7 @@ The Empower backend is built on **Supabase** (PostgreSQL + Edge Functions) and p
 
 ### 1. **Escrow Payment System**
 - Secure payment holding and release
-- Dynamic platform fee calculation (3-6% based on amount)
+- Dynamic platform fee calculation (12%/8%/5% based on amount)
 - Automatic refund processing with dispute handling
 - Full transaction history and reporting
 
@@ -278,10 +278,11 @@ POST /functions/v1/subscription-management
 
 ## 💰 Revenue Model Implementation
 
-### 1. **Commission-Based Model (3-6%)**
-- Automatically calculated based on job amount
-- Lower rates for smaller jobs to encourage adoption
-- Transparent fee structure for users
+### 1. **Commission-Based Model (12%, 8%, 5%)**
+- 12% for jobs up to ₹5,000
+- 8% for jobs ₹5,001 to ₹25,000  
+- 5% for jobs above ₹25,000
+- Transparent tiered fee structure
 
 ### 2. **Subscription Plans**
 | Plan | Monthly | Features |
@@ -405,7 +406,7 @@ await fetch('/functions/v1/escrow-payment', {
   body: JSON.stringify({
     action: 'deposit',
     jobId: job.id,
-    amount: 12000, // Total for 10 workers
+    amount: 12000, // Total for 10 workers (12% fee = ₹1,440, workers get ₹10,560)
     paymentMethod: 'bank_transfer'
   })
 });

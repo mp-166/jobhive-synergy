@@ -51,10 +51,9 @@ serve(async (req) => {
       let feePercentage = 5; // Default 5%
       
       // Dynamic fee structure based on amount
-      if (amount <= 1000) feePercentage = 3;
-      else if (amount <= 5000) feePercentage = 4;
-      else if (amount <= 15000) feePercentage = 5;
-      else feePercentage = 6;
+      if (amount <= 5000) feePercentage = 12;
+      else if (amount <= 25000) feePercentage = 8;
+      else feePercentage = 5;
 
       const platformFee = Math.round((amount * feePercentage) / 100);
       const workerAmount = amount - platformFee;
