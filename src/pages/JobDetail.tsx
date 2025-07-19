@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
 import Badge from '@/components/common/Badge';
+import PaymentManager from '@/components/payment/PaymentManager';
+import { useAuth } from '@/contexts/AuthContext';
+import { databaseAPI } from '@/lib/api';
 import { MapPin, Clock, Calendar, DollarSign, Briefcase, User, CheckCircle, ChevronLeft } from 'lucide-react';
 
 // Sample job data
@@ -69,7 +72,32 @@ const jobData = {
 
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const job = jobData; // In a real app, you'd fetch the job by id
+  const { user } = useAuth();
+  const [job, setJob] = useState(jobData); // In a real app, you'd fetch the job by id
+  const [jobWithDetails, setJobWithDetails] = useState<any>(null);
+
+  useEffect(() => {
+    if (id) {
+      loadJobDetails();
+    }
+  }, [id]);
+
+  const loadJobDetails = async () => {
+    try {
+      // In a real app, fetch job with payment details
+      const jobDetails = await databaseAPI.getJobWithDetails(id!);
+      setJobWithDetails(jobDetails);
+    } catch (error) {
+      // Fallback to sample data for demo
+      setJobWithDetails({ ...jobData, escrow_payments: [] });
+    }
+  };
+
+  const getUserRole = () => {
+    if (!user) return null;
+    if (job.employerId === user.id) return 'employer';
+    return 'worker';
+  };
   
   if (!job) {
     return (
@@ -258,30 +286,14 @@ const JobDetail = () => {
                 </div>
               </Card>
               
-              <Card variant="glass">
-                <h2 className="text-lg font-semibold mb-3">Secure Payment</h2>
-                <p className="text-sm text-muted-foreground mb-4">
-                  This job uses our secure escrow payment system for your protection.
-                </p>
-                <div className="flex items-center space-x-2 text-sm mb-4">
-                  <svg className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span>Payment held in escrow</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm mb-4">
-                  <svg className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span>Released only when job is complete</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm">
-                  <svg className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span>24/7 dispute resolution</span>
-                </div>
-              </Card>
+              {/* Enhanced Payment Management */}
+              {user && getUserRole() && jobWithDetails && (
+                <PaymentManager 
+                  job={jobWithDetails} 
+                  userRole={getUserRole()!}
+                  onPaymentUpdate={loadJobDetails}
+                />
+              )}
             </div>
           </div>
           
